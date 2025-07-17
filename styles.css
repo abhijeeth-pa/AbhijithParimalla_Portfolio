@@ -27,6 +27,10 @@
   --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+html {
+  scroll-behavior: auto !important;
+}
+
 body {
   font-family: "Inter", sans-serif;
   line-height: 1.6;
@@ -34,6 +38,25 @@ body {
   background: var(--bg-primary);
   overflow-x: hidden;
   position: relative;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: var(--gradient-primary);
+  width: 0%;
+  transition: width 0.1s ease;
+  box-shadow: 0 0 20px var(--primary-neon);
 }
 
 /* Particle Background */
@@ -193,6 +216,7 @@ nav {
   transition: var(--transition);
   text-transform: uppercase;
   letter-spacing: 1px;
+  cursor: pointer;
 }
 
 .nav-menu a::before {
@@ -233,27 +257,47 @@ nav {
   box-shadow: 0 0 10px var(--primary-neon);
 }
 
-/* Hero Section */
+/* Hero Section with Parallax Layers */
 .hero-section {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
   position: relative;
   overflow: hidden;
 }
 
-.hero-section::before {
-  content: "";
+.hero-bg-layers {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.bg-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.layer-1 {
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+}
+
+.layer-2 {
   background: linear-gradient(45deg, transparent 30%, rgba(0, 255, 255, 0.03) 50%, transparent 70%),
     linear-gradient(-45deg, transparent 30%, rgba(255, 0, 255, 0.03) 50%, transparent 70%);
   animation: scan-lines 4s linear infinite;
+}
+
+.layer-3 {
+  background: radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 0, 255, 0.1) 0%, transparent 50%);
+  animation: pulse-bg 6s ease-in-out infinite alternate;
 }
 
 @keyframes scan-lines {
@@ -262,6 +306,15 @@ nav {
   }
   100% {
     transform: translateX(100%);
+  }
+}
+
+@keyframes pulse-bg {
+  from {
+    opacity: 0.3;
+  }
+  to {
+    opacity: 0.7;
   }
 }
 
@@ -288,12 +341,60 @@ nav {
   font-size: 4rem;
   font-weight: 800;
   display: block;
-  background: var(--gradient-primary);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
   position: relative;
   margin: 1rem 0;
+  color: #ffffff !important;
+  background: linear-gradient(135deg, #00ffff 0%, #8a2be2 50%, #ff00ff 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  text-shadow:
+    0 1px 0 #00ffff,
+    0 2px 0 #00e6e6,
+    0 3px 0 #00cccc,
+    0 4px 0 #00b3b3,
+    0 5px 0 #009999,
+    0 6px 0 #008080,
+    0 7px 0 #006666,
+    0 8px 0 #004d4d,
+    0 0 20px rgba(0, 255, 255, 0.8),
+    0 0 40px rgba(0, 255, 255, 0.6),
+    0 0 60px rgba(0, 255, 255, 0.4);
+  transform: perspective(1000px) rotateX(5deg) rotateY(-2deg);
+  animation: name-float 4s ease-in-out infinite alternate;
+}
+
+@keyframes name-float {
+  0% {
+    transform: perspective(1000px) rotateX(15deg) rotateY(-5deg) translateZ(0px);
+    text-shadow:
+      0 1px 0 #00ffff,
+      0 2px 0 #00e6e6,
+      0 3px 0 #00cccc,
+      0 4px 0 #00b3b3,
+      0 5px 0 #009999,
+      0 6px 0 #008080,
+      0 7px 0 #006666,
+      0 8px 0 #004d4d,
+      0 0 20px rgba(0, 255, 255, 0.8),
+      0 0 40px rgba(0, 255, 255, 0.6),
+      0 0 60px rgba(0, 255, 255, 0.4);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(20deg) rotateY(5deg) translateZ(20px);
+    text-shadow:
+      0 2px 0 #00ffff,
+      0 4px 0 #00e6e6,
+      0 6px 0 #00cccc,
+      0 8px 0 #00b3b3,
+      0 10px 0 #009999,
+      0 12px 0 #008080,
+      0 14px 0 #006666,
+      0 16px 0 #004d4d,
+      0 0 30px rgba(0, 255, 255, 1),
+      0 0 50px rgba(0, 255, 255, 0.8),
+      0 0 80px rgba(0, 255, 255, 0.6);
+  }
 }
 
 .glitch {
@@ -551,11 +652,36 @@ nav {
   }
 }
 
+/* Reveal Animations */
+.reveal-text {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.reveal-text.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card-reveal {
+  opacity: 1 !important;
+  transform: translateY(0) rotateX(0deg) !important;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.card-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0) rotateX(0deg);
+}
+
 /* Sections */
 .section {
   padding: 6rem 0;
   position: relative;
   background: var(--bg-primary);
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 .section:nth-child(even) {
@@ -568,6 +694,7 @@ nav {
   padding: 0 2rem;
   position: relative;
   z-index: 10;
+  opacity: 1 !important;
 }
 
 .section-title {
@@ -612,12 +739,15 @@ nav {
 
 .about-card {
   background: var(--bg-card);
-  padding: 2rem;
   border-radius: var(--border-radius);
+  padding: 2rem;
   border: 1px solid var(--primary-neon);
   transition: var(--transition);
   position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 .about-card::before {
@@ -662,6 +792,8 @@ nav {
   transition: var(--transition);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }
 
 .skill-tag:hover {
@@ -723,6 +855,8 @@ nav {
   position: relative;
   overflow: hidden;
   transform-style: preserve-3d;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 .project-card.holographic::before {
@@ -848,6 +982,8 @@ nav {
   text-transform: uppercase;
   letter-spacing: 0.5px;
   transition: var(--transition);
+  opacity: 1 !important;
+  transform: scale(1) !important;
 }
 
 .tech-stack span:hover {
@@ -919,6 +1055,8 @@ nav {
   position: relative;
   overflow: hidden;
   transform-style: preserve-3d;
+  opacity: 1 !important;
+  transform: translateY(0) !important;
 }
 
 .cert-card::before {
@@ -1225,32 +1363,60 @@ nav {
   align-items: center;
   gap: 1rem;
   padding: 2rem;
-  background: var(--bg-card);
+  background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
   border-radius: var(--border-radius);
   text-decoration: none;
   color: var(--text-primary);
-  border: 1px solid var(--primary-neon);
+  border: 2px solid var(--primary-neon);
   transition: var(--transition);
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.social-link::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.2), transparent);
+  transition: var(--transition);
+}
+
+.social-link:hover::before {
+  left: 100%;
 }
 
 .social-link:hover {
-  transform: translateY(-8px) rotateX(5deg);
-  box-shadow: var(--shadow-neon);
+  transform: translateY(-15px) rotateX(10deg) scale(1.05);
+  box-shadow: 0 0 40px rgba(0, 255, 255, 0.6), 0 20px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
   border-color: var(--text-accent);
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
 }
 
 .social-icon {
   width: 48px;
   height: 48px;
-  filter: brightness(0) invert(1);
+  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%)
+    contrast(97%);
   transition: var(--transition);
+  background: rgba(0, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px;
+  border: 1px solid var(--primary-neon);
 }
 
 .social-link:hover .social-icon {
-  filter: brightness(0) invert(1) drop-shadow(0 0 10px var(--primary-neon));
+  filter: brightness(0) saturate(100%) invert(77%) sepia(100%) saturate(1000%) hue-rotate(180deg) brightness(120%)
+    contrast(120%);
+  background: var(--primary-neon);
+  box-shadow: 0 0 20px var(--primary-neon);
+  transform: scale(1.1);
 }
 
 .resume-section {
@@ -1403,11 +1569,6 @@ nav {
     width: 100px;
     height: 100px;
   }
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
 }
 
 /* Custom scrollbar */
