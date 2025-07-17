@@ -1,3 +1,8 @@
+// Import Lenis and GSAP
+import Lenis from "@studio-freight/lenis"
+import gsap from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
+
 // Cursor Glow Effect
 document.addEventListener("mousemove", (e) => {
   const cursor = document.querySelector(".cursor-glow")
@@ -7,143 +12,173 @@ document.addEventListener("mousemove", (e) => {
   }
 })
 
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault()
-    const target = document.querySelector(this.getAttribute("href"))
-    if (target) {
-      target.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      })
-    }
-  })
+// Initialize Lenis Smooth Scroll
+const lenis = new Lenis({
+  duration: 1.2,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+  direction: "vertical",
+  gestureDirection: "vertical",
+  smooth: true,
+  mouseMultiplier: 1,
+  smoothTouch: false,
+  touchMultiplier: 2,
+  infinite: false,
 })
 
-// Intersection Observer for Animations
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: "0px 0px -50px 0px",
+// GSAP ScrollTrigger integration with Lenis
+gsap.registerPlugin(ScrollTrigger)
+
+lenis.on("scroll", ScrollTrigger.update)
+
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000)
+})
+
+gsap.ticker.lagSmoothing(0)
+
+// Scroll Progress Bar
+lenis.on("scroll", ({ scroll, limit }) => {
+  const progress = scroll / limit
+  document.querySelector(".scroll-progress-bar").style.width = `${progress * 100}%`
+})
+
+// Custom scroll to function for navigation
+function scrollToSection(target) {
+  const element = document.querySelector(target)
+  if (element) {
+    lenis.scrollTo(element, {
+      offset: -80,
+      duration: 2,
+      easing: (t) => 1 - Math.pow(1 - t, 3),
+    })
+  }
 }
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = "1"
-      entry.target.style.transform = "translateY(0) rotateX(0)"
-    }
+// Navigation click handlers
+document.querySelectorAll("[data-scroll-to]").forEach((link) => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault()
+    const target = `#${link.getAttribute("data-scroll-to")}`
+    scrollToSection(target)
   })
-}, observerOptions)
-
-// Observe all elements for animations
-document.querySelectorAll(".project-card, .cert-card, .about-card").forEach((el) => {
-  el.style.opacity = "0"
-  el.style.transform = "translateY(50px) rotateX(-10deg)"
-  el.style.transition = "opacity 0.8s ease, transform 0.8s ease"
-  observer.observe(el)
 })
 
-// Enhanced Navbar on Scroll
-window.addEventListener("scroll", () => {
-  const header = document.querySelector("header")
-  if (window.scrollY > 100) {
-    header.style.background = "rgba(0, 0, 0, 0.95)"
-    header.style.boxShadow = "0 4px 30px rgba(0, 255, 255, 0.3)"
-  } else {
-    header.style.background = "rgba(10, 10, 10, 0.9)"
-    header.style.boxShadow = "0 4px 20px rgba(0, 255, 255, 0.2)"
-  }
+// GSAP Scroll Animations
+gsap.set(".reveal-text", { y: 100, opacity: 0 })
+gsap.set(".card-reveal", { y: 120, rotationX: -15, opacity: 0 })
+
+// Reveal text animations
+ScrollTrigger.batch(".reveal-text", {
+  onEnter: (elements) => {
+    gsap.to(elements, {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      stagger: 0.2,
+      ease: "power3.out",
+    })
+  },
+  start: "top 80%",
 })
 
-// Parallax Effect for Hero Section
-window.addEventListener("scroll", () => {
-  const scrolled = window.pageYOffset
-  const heroSection = document.querySelector(".hero-section")
-  const cube = document.querySelector(".cube")
-  const rate = scrolled * -0.3
-
-  if (heroSection) {
-    heroSection.style.transform = `translateY(${rate}px)`
-  }
-
-  if (cube) {
-    cube.style.transform = `rotateX(${scrolled * 0.1}deg) rotateY(${scrolled * 0.2}deg) rotateZ(${scrolled * 0.05}deg)`
-  }
+// Card reveal animations
+ScrollTrigger.batch(".card-reveal", {
+  onEnter: (elements) => {
+    gsap.to(elements, {
+      y: 0,
+      rotationX: 0,
+      opacity: 1,
+      duration: 1,
+      stagger: 0.15,
+      ease: "power2.out",
+    })
+  },
+  start: "top 85%",
 })
 
-// Add Loading Animation
-window.addEventListener("load", () => {
-  document.body.style.opacity = "0"
-  document.body.style.transition = "opacity 1s ease"
-
-  // Create loading screen
-  const loadingScreen = document.createElement("div")
-  loadingScreen.innerHTML = `
-    <div style="
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      flex-direction: column;
-    ">
-      <div style="
-        width: 60px;
-        height: 60px;
-        border: 3px solid transparent;
-        border-top: 3px solid #00ffff;
-        border-radius: 50%;
-        animation: spin 1s linear infinite;
-        margin-bottom: 20px;
-        box-shadow: 0 0 20px #00ffff;
-      "></div>
-      <div style="
-        color: #00ffff;
-        font-family: 'Inter', sans-serif;
-        font-size: 1.2rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        text-shadow: 0 0 10px #00ffff;
-      ">Loading...</div>
-    </div>
-  `
-
-  const style = document.createElement("style")
-  style.textContent = `
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  `
-  document.head.appendChild(style)
-  document.body.appendChild(loadingScreen)
-
-  setTimeout(() => {
-    loadingScreen.style.opacity = "0"
-    loadingScreen.style.transition = "opacity 0.5s ease"
-    document.body.style.opacity = "1"
-
-    setTimeout(() => {
-      document.body.removeChild(loadingScreen)
-    }, 500)
-  }, 2000)
+// Parallax effects for hero elements
+gsap.to(".layer-1", {
+  yPercent: -50,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero-section",
+    start: "top bottom",
+    end: "bottom top",
+    scrub: true,
+  },
 })
 
-// Enhanced Card Hover Effects with 3D
+gsap.to(".layer-2", {
+  yPercent: -30,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero-section",
+    start: "top bottom",
+    end: "bottom top",
+    scrub: true,
+  },
+})
+
+gsap.to(".layer-3", {
+  yPercent: -20,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero-section",
+    start: "top bottom",
+    end: "bottom top",
+    scrub: true,
+  },
+})
+
+// 3D Cube rotation based on scroll
+gsap.to(".cube", {
+  rotationX: 360,
+  rotationY: 360,
+  rotationZ: 180,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero-section",
+    start: "top bottom",
+    end: "bottom top",
+    scrub: 1,
+  },
+})
+
+// Floating geometry movement
+gsap.to(".floating-geometry", {
+  y: -100,
+  x: 50,
+  ease: "none",
+  scrollTrigger: {
+    trigger: ".hero-section",
+    start: "top bottom",
+    end: "bottom top",
+    scrub: 2,
+  },
+})
+
+// Project cards 3D hover effect
 document.querySelectorAll(".project-card, .cert-card, .about-card").forEach((card) => {
-  card.addEventListener("mouseenter", (e) => {
-    const rect = card.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
+  card.addEventListener("mouseenter", () => {
+    gsap.to(card, {
+      y: -20,
+      rotationX: 10,
+      rotationY: 5,
+      scale: 1.02,
+      duration: 0.4,
+      ease: "power2.out",
+    })
+  })
 
-    card.style.setProperty("--mouse-x", x + "px")
-    card.style.setProperty("--mouse-y", y + "px")
+  card.addEventListener("mouseleave", () => {
+    gsap.to(card, {
+      y: 0,
+      rotationX: 0,
+      rotationY: 0,
+      scale: 1,
+      duration: 0.4,
+      ease: "power2.out",
+    })
   })
 
   card.addEventListener("mousemove", (e) => {
@@ -152,16 +187,35 @@ document.querySelectorAll(".project-card, .cert-card, .about-card").forEach((car
     const y = e.clientY - rect.top
     const centerX = rect.width / 2
     const centerY = rect.height / 2
-    const rotateX = (y - centerY) / 10
-    const rotateY = (centerX - x) / 10
+    const rotateX = (y - centerY) / 8
+    const rotateY = (centerX - x) / 8
 
-    card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`
-  })
-
-  card.addEventListener("mouseleave", () => {
-    card.style.transform = "translateY(0) rotateX(0) rotateY(0) scale(1)"
+    gsap.to(card, {
+      rotationX: rotateX,
+      rotationY: rotateY,
+      duration: 0.2,
+      ease: "power1.out",
+    })
   })
 })
+
+// Enhanced Navbar on Scroll
+ScrollTrigger.create({
+  start: "top -80",
+  end: 99999,
+  toggleClass: { className: "scrolled", targets: "header" },
+})
+
+// Add scrolled class styles
+const style = document.createElement("style")
+style.textContent = `
+  header.scrolled {
+    background: rgba(0, 0, 0, 0.95) !important;
+    box-shadow: 0 4px 30px rgba(0, 255, 255, 0.3) !important;
+    backdrop-filter: blur(30px) !important;
+  }
+`
+document.head.appendChild(style)
 
 // Typing Animation for Hero Title
 function typeWriter(element, text, speed = 100) {
@@ -302,78 +356,24 @@ function showNotification(message, type = "info") {
 
   document.body.appendChild(notification)
 
-  // Animate in
-  setTimeout(() => {
-    notification.style.transform = "translateX(0)"
-  }, 100)
+  // Animate in with GSAP
+  gsap.fromTo(notification, { x: 100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.out" })
 
   // Remove after 5 seconds
   setTimeout(() => {
-    notification.style.transform = "translateX(100%)"
-    setTimeout(() => {
-      if (document.body.contains(notification)) {
-        document.body.removeChild(notification)
-      }
-    }, 400)
+    gsap.to(notification, {
+      x: 100,
+      opacity: 0,
+      duration: 0.4,
+      ease: "power2.in",
+      onComplete: () => {
+        if (document.body.contains(notification)) {
+          document.body.removeChild(notification)
+        }
+      },
+    })
   }, 5000)
 }
-
-// Add matrix rain effect (optional)
-function createMatrixRain() {
-  const canvas = document.createElement("canvas")
-  const ctx = canvas.getContext("2d")
-
-  canvas.style.position = "fixed"
-  canvas.style.top = "0"
-  canvas.style.left = "0"
-  canvas.style.width = "100%"
-  canvas.style.height = "100%"
-  canvas.style.pointerEvents = "none"
-  canvas.style.zIndex = "1"
-  canvas.style.opacity = "0.1"
-
-  document.body.appendChild(canvas)
-
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
-
-  const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}".split("")
-  const fontSize = 10
-  const columns = canvas.width / fontSize
-  const drops = []
-
-  for (let x = 0; x < columns; x++) {
-    drops[x] = 1
-  }
-
-  function draw() {
-    ctx.fillStyle = "rgba(0, 0, 0, 0.05)"
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-    ctx.fillStyle = "#00ffff"
-    ctx.font = fontSize + "px monospace"
-
-    for (let i = 0; i < drops.length; i++) {
-      const text = letters[Math.floor(Math.random() * letters.length)]
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize)
-
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0
-      }
-      drops[i]++
-    }
-  }
-
-  setInterval(draw, 35)
-
-  window.addEventListener("resize", () => {
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
-  })
-}
-
-// Uncomment to enable matrix rain effect
-// createMatrixRain()
 
 // Add glitch effect to random elements
 setInterval(() => {
@@ -381,9 +381,163 @@ setInterval(() => {
   const randomElement = elements[Math.floor(Math.random() * elements.length)]
 
   if (randomElement) {
-    randomElement.style.animation = "glitch 0.3s ease-in-out"
-    setTimeout(() => {
-      randomElement.style.animation = ""
-    }, 300)
+    gsap.to(randomElement, {
+      x: 2,
+      duration: 0.1,
+      yoyo: true,
+      repeat: 5,
+      ease: "power2.inOut",
+    })
   }
 }, 10000)
+
+// Skill tags animation on scroll
+ScrollTrigger.batch(".skill-tag", {
+  onEnter: (elements) => {
+    gsap.fromTo(
+      elements,
+      { scale: 0, opacity: 0 },
+      {
+        scale: 1,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "back.out(1.7)",
+      },
+    )
+  },
+  start: "top 90%",
+})
+
+// Tech stack animation
+ScrollTrigger.batch(".tech-stack span", {
+  onEnter: (elements) => {
+    gsap.fromTo(
+      elements,
+      { y: 20, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.05,
+        ease: "power2.out",
+      },
+    )
+  },
+  start: "top 85%",
+})
+
+// Loading screen with enhanced animations
+window.addEventListener("load", () => {
+  // Create enhanced loading screen
+  const loadingScreen = document.createElement("div")
+  loadingScreen.innerHTML = `
+    <div style="
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, #1a1a2e 0%, #16213e 50%, #0f0f23 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+      flex-direction: column;
+    ">
+      <div class="loader-cube" style="
+        width: 60px;
+        height: 60px;
+        position: relative;
+        transform-style: preserve-3d;
+        margin-bottom: 30px;
+      ">
+        <div style="position: absolute; width: 60px; height: 60px; border: 2px solid #00ffff; background: rgba(0,255,255,0.1); transform: rotateY(0deg) translateZ(30px);"></div>
+        <div style="position: absolute; width: 60px; height: 60px; border: 2px solid #ff00ff; background: rgba(255,0,255,0.1); transform: rotateY(90deg) translateZ(30px);"></div>
+        <div style="position: absolute; width: 60px; height: 60px; border: 2px solid #00ff00; background: rgba(0,255,0,0.1); transform: rotateY(180deg) translateZ(30px);"></div>
+        <div style="position: absolute; width: 60px; height: 60px; border: 2px solid #8a2be2; background: rgba(138,43,226,0.1); transform: rotateY(-90deg) translateZ(30px);"></div>
+      </div>
+      <div style="
+        color: #00ffff;
+        font-family: 'Inter', sans-serif;
+        font-size: 1.2rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 0 10px #00ffff;
+      ">Loading Portfolio...</div>
+    </div>
+  `
+
+  document.body.appendChild(loadingScreen)
+
+  // Animate loading cube
+  gsap.to(".loader-cube", {
+    rotationX: 360,
+    rotationY: 360,
+    duration: 2,
+    repeat: -1,
+    ease: "none",
+  })
+
+  // Remove loading screen after 2.5 seconds
+  setTimeout(() => {
+    gsap.to(loadingScreen, {
+      opacity: 0,
+      duration: 0.8,
+      ease: "power2.inOut",
+      onComplete: () => {
+        document.body.removeChild(loadingScreen)
+
+        // Initialize main animations
+        gsap.fromTo("body", { opacity: 0 }, { opacity: 1, duration: 1, ease: "power2.out" })
+      },
+    })
+  }, 2500)
+})
+
+// Smooth scroll to top function
+function scrollToTop() {
+  lenis.scrollTo(0, {
+    duration: 2,
+    easing: (t) => 1 - Math.pow(1 - t, 3),
+  })
+}
+
+// Add scroll to top button (optional)
+const scrollTopBtn = document.createElement("button")
+scrollTopBtn.innerHTML = "↑"
+scrollTopBtn.style.cssText = `
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--gradient-primary);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+`
+
+document.body.appendChild(scrollTopBtn)
+
+scrollTopBtn.addEventListener("click", scrollToTop)
+
+// Show/hide scroll to top button
+ScrollTrigger.create({
+  start: "top -300",
+  end: 99999,
+  onUpdate: (self) => {
+    if (self.direction === 1) {
+      gsap.to(scrollTopBtn, { opacity: 1, y: 0, duration: 0.3 })
+    } else {
+      gsap.to(scrollTopBtn, { opacity: 0, y: 100, duration: 0.3 })
+    }
+  },
+})
