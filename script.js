@@ -12,17 +12,18 @@ document.addEventListener("mousemove", (e) => {
   }
 })
 
-// Initialize Lenis Smooth Scroll
+// Initialize Lenis Smooth Scroll with enhanced settings
 const lenis = new Lenis({
-  duration: 1.2,
+  duration: 1.8,
   easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   direction: "vertical",
   gestureDirection: "vertical",
   smooth: true,
-  mouseMultiplier: 1,
-  smoothTouch: false,
-  touchMultiplier: 2,
+  mouseMultiplier: 2,
+  smoothTouch: true,
+  touchMultiplier: 3,
   infinite: false,
+  normalizeWheel: true,
 })
 
 // GSAP ScrollTrigger integration with Lenis
@@ -157,46 +158,141 @@ gsap.to(".floating-geometry", {
   },
 })
 
-// Project cards 3D hover effect
+// Enhanced 3D Scrolling Effects
+ScrollTrigger.create({
+  trigger: ".hero-section",
+  start: "top top",
+  end: "bottom top",
+  scrub: 1,
+  onUpdate: (self) => {
+    const progress = self.progress
+
+    // 3D transform for hero content
+    gsap.set(".hero-content", {
+      rotationX: progress * 30,
+      z: progress * -200,
+      opacity: 1 - progress * 0.5,
+    })
+
+    // Enhanced cube rotation
+    gsap.set(".cube", {
+      rotationX: progress * 720,
+      rotationY: progress * 540,
+      rotationZ: progress * 360,
+      scale: 1 - progress * 0.3,
+      z: progress * 300,
+    })
+  },
+})
+
+// Section entrance animations with 3D effects
+ScrollTrigger.batch(".section", {
+  onEnter: (elements) => {
+    elements.forEach((section, index) => {
+      gsap.fromTo(
+        section,
+        {
+          rotationX: -15,
+          y: 100,
+          opacity: 0,
+          scale: 0.9,
+        },
+        {
+          rotationX: 0,
+          y: 0,
+          opacity: 1,
+          scale: 1,
+          duration: 1.5,
+          delay: index * 0.1,
+          ease: "power3.out",
+        },
+      )
+    })
+  },
+  start: "top 80%",
+})
+
+// Enhanced card animations with magnetic effect
 document.querySelectorAll(".project-card, .cert-card, .about-card").forEach((card) => {
+  let isHovering = false
+
   card.addEventListener("mouseenter", () => {
+    isHovering = true
     gsap.to(card, {
-      y: -20,
-      rotationX: 10,
-      rotationY: 5,
-      scale: 1.02,
-      duration: 0.4,
+      y: -30,
+      rotationX: 15,
+      rotationY: 10,
+      scale: 1.05,
+      duration: 0.6,
       ease: "power2.out",
+      transformOrigin: "center center",
+      boxShadow: "0 30px 60px rgba(0, 255, 255, 0.3)",
     })
   })
 
   card.addEventListener("mouseleave", () => {
+    isHovering = false
     gsap.to(card, {
       y: 0,
       rotationX: 0,
       rotationY: 0,
       scale: 1,
-      duration: 0.4,
+      duration: 0.6,
       ease: "power2.out",
+      boxShadow: "0 0 20px rgba(0, 255, 255, 0.2)",
     })
   })
 
   card.addEventListener("mousemove", (e) => {
+    if (!isHovering) return
+
     const rect = card.getBoundingClientRect()
     const x = e.clientX - rect.left
     const y = e.clientY - rect.top
     const centerX = rect.width / 2
     const centerY = rect.height / 2
-    const rotateX = (y - centerY) / 8
-    const rotateY = (centerX - x) / 8
+    const rotateX = (y - centerY) / 5
+    const rotateY = (centerX - x) / 5
 
     gsap.to(card, {
-      rotationX: rotateX,
-      rotationY: rotateY,
+      rotationX: 15 + rotateX,
+      rotationY: 10 + rotateY,
       duration: 0.2,
       ease: "power1.out",
     })
   })
+})
+
+// Scroll velocity effects
+let scrollVelocity = 0
+let lastScrollY = 0
+
+lenis.on("scroll", ({ scroll }) => {
+  scrollVelocity = scroll - lastScrollY
+  lastScrollY = scroll
+
+  // Apply velocity-based effects
+  gsap.to(".particle", {
+    x: scrollVelocity * 0.5,
+    duration: 0.5,
+    ease: "power2.out",
+  })
+
+  // Velocity-based blur effect
+  const blurAmount = Math.min(Math.abs(scrollVelocity) * 0.1, 5)
+  gsap.to("body", {
+    filter: `blur(${blurAmount}px)`,
+    duration: 0.1,
+    ease: "none",
+  })
+
+  setTimeout(() => {
+    gsap.to("body", {
+      filter: "blur(0px)",
+      duration: 0.3,
+      ease: "power2.out",
+    })
+  }, 100)
 })
 
 // Enhanced Navbar on Scroll
@@ -243,6 +339,49 @@ window.addEventListener("load", () => {
     }, 2500)
   }
 })
+
+// Enhanced 3D Name Interaction
+const nameElement = document.querySelector(".name")
+if (nameElement) {
+  nameElement.addEventListener("mouseenter", () => {
+    gsap.to(nameElement, {
+      rotationX: 25,
+      rotationY: 15,
+      scale: 1.1,
+      z: 50,
+      duration: 0.6,
+      ease: "power2.out",
+    })
+  })
+
+  nameElement.addEventListener("mouseleave", () => {
+    gsap.to(nameElement, {
+      rotationX: 15,
+      rotationY: -5,
+      scale: 1,
+      z: 0,
+      duration: 0.6,
+      ease: "power2.out",
+    })
+  })
+
+  nameElement.addEventListener("mousemove", (e) => {
+    const rect = nameElement.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+    const rotateX = (y - centerY) / 10
+    const rotateY = (centerX - x) / 10
+
+    gsap.to(nameElement, {
+      rotationX: 25 + rotateX,
+      rotationY: 15 + rotateY,
+      duration: 0.2,
+      ease: "power1.out",
+    })
+  })
+}
 
 // Enhanced ripple effect for buttons
 document.querySelectorAll("button, .btn-primary, .btn-secondary, .project-link, .cert-link").forEach((button) => {
