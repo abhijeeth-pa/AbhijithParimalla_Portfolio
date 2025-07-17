@@ -343,57 +343,48 @@ nav {
   display: block;
   position: relative;
   margin: 1rem 0;
-  color: #ffffff !important;
-  background: linear-gradient(135deg, #00ffff 0%, #8a2be2 50%, #ff00ff 100%) !important;
+  background: linear-gradient(90deg, #ff6ec4, #7873f5, #4ade80, #facc15, #fd6a6a);
   -webkit-background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
   background-clip: text !important;
   text-shadow:
-    0 1px 0 #00ffff,
-    0 2px 0 #00e6e6,
-    0 3px 0 #00cccc,
-    0 4px 0 #00b3b3,
-    0 5px 0 #009999,
-    0 6px 0 #008080,
-    0 7px 0 #006666,
-    0 8px 0 #004d4d,
-    0 0 20px rgba(0, 255, 255, 0.8),
-    0 0 40px rgba(0, 255, 255, 0.6),
-    0 0 60px rgba(0, 255, 255, 0.4);
+    0 1px 0 #ff6ec4,
+    0 2px 0 #7873f5,
+    0 3px 0 #4ade80,
+    0 4px 0 #facc15,
+    0 5px 0 #fd6a6a,
+    0 0 20px rgba(255, 110, 196, 0.8),
+    0 0 40px rgba(120, 115, 245, 0.6),
+    0 0 60px rgba(74, 222, 128, 0.4);
   transform: perspective(1000px) rotateX(5deg) rotateY(-2deg);
   animation: name-float 4s ease-in-out infinite alternate;
+  z-index: 5;
 }
 
 @keyframes name-float {
   0% {
     transform: perspective(1000px) rotateX(15deg) rotateY(-5deg) translateZ(0px);
     text-shadow:
-      0 1px 0 #00ffff,
-      0 2px 0 #00e6e6,
-      0 3px 0 #00cccc,
-      0 4px 0 #00b3b3,
-      0 5px 0 #009999,
-      0 6px 0 #008080,
-      0 7px 0 #006666,
-      0 8px 0 #004d4d,
-      0 0 20px rgba(0, 255, 255, 0.8),
-      0 0 40px rgba(0, 255, 255, 0.6),
-      0 0 60px rgba(0, 255, 255, 0.4);
+      0 1px 0 #ff6ec4,
+      0 2px 0 #7873f5,
+      0 3px 0 #4ade80,
+      0 4px 0 #facc15,
+      0 5px 0 #fd6a6a,
+      0 0 20px rgba(255, 110, 196, 0.8),
+      0 0 40px rgba(120, 115, 245, 0.6),
+      0 0 60px rgba(74, 222, 128, 0.4);
   }
   100% {
     transform: perspective(1000px) rotateX(20deg) rotateY(5deg) translateZ(20px);
     text-shadow:
-      0 2px 0 #00ffff,
-      0 4px 0 #00e6e6,
-      0 6px 0 #00cccc,
-      0 8px 0 #00b3b3,
-      0 10px 0 #009999,
-      0 12px 0 #008080,
-      0 14px 0 #006666,
-      0 16px 0 #004d4d,
-      0 0 30px rgba(0, 255, 255, 1),
-      0 0 50px rgba(0, 255, 255, 0.8),
-      0 0 80px rgba(0, 255, 255, 0.6);
+      0 2px 0 #ff6ec4,
+      0 4px 0 #7873f5,
+      0 6px 0 #4ade80,
+      0 8px 0 #facc15,
+      0 10px 0 #fd6a6a,
+      0 0 30px rgba(255, 110, 196, 1),
+      0 0 50px rgba(120, 115, 245, 0.8),
+      0 0 80px rgba(74, 222, 128, 0.6);
   }
 }
 
@@ -410,38 +401,29 @@ nav {
   left: 0;
   width: 100%;
   height: 100%;
-  background: var(--bg-primary);
+  background: inherit;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0.7;
 }
 
 .glitch::before {
   animation: glitch-1 0.5s infinite;
-  color: var(--primary-neon);
   z-index: -1;
 }
 
 .glitch::after {
   animation: glitch-2 0.5s infinite;
-  color: var(--secondary-neon);
   z-index: -2;
 }
 
 @keyframes glitch {
-  0%,
-  100% {
-    transform: translate(0);
-  }
-  20% {
-    transform: translate(-2px, 2px);
-  }
-  40% {
-    transform: translate(-2px, -2px);
-  }
-  60% {
-    transform: translate(2px, 2px);
-  }
-  80% {
-    transform: translate(2px, -2px);
-  }
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
 }
 
 @keyframes glitch-1 {
@@ -1361,6 +1343,8 @@ nav {
   display: flex;
   flex-direction: column;
   align-items: center;
+  filter: brightness(0) invert(1);
+  mix-blend-mode: lighten;
   gap: 1rem;
   padding: 2rem;
   background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
