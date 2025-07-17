@@ -1382,26 +1382,26 @@ nav {
   border-color: var(--text-accent);
   background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
 }
-
 .social-icon {
   width: 48px;
   height: 48px;
-  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%)
-    contrast(97%);
-  transition: var(--transition);
-  background: rgba(0, 255, 255, 0.1);
-  border-radius: 8px;
   padding: 8px;
+  border-radius: 8px;
   border: 1px solid var(--primary-neon);
+  background: rgba(0, 255, 255, 0.1);
+  filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);
+  transition: var(--transition);
+  object-fit: contain;
 }
 
 .social-link:hover .social-icon {
-  filter: brightness(0) saturate(100%) invert(77%) sepia(100%) saturate(1000%) hue-rotate(180deg) brightness(120%)
-    contrast(120%);
+  filter: brightness(0) saturate(100%) invert(77%) sepia(100%) saturate(1000%) hue-rotate(180deg) brightness(120%) contrast(120%);
   background: var(--primary-neon);
   box-shadow: 0 0 20px var(--primary-neon);
   transform: scale(1.1);
 }
+
+ 
 
 .resume-section {
   text-align: center;
