@@ -4,139 +4,295 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <title>Portfolio Website</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Abhijith Parimalla - AI/ML Developer</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    
     <header class="parallax" id="home">
         <nav>
-            <ul>
+            <div class="nav-brand">
+                <span class="logo">AP</span>
+            </div>
+            <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#certifications">Certifications</a></li>
+                <li><a href="#newsletter">Newsletter</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </nav>
     </header>
 
-    <hr>
-
-    <div class="background-container">
-        <p>
-            <strong>Welcome to my portfolio!</strong><br><br>
-            I'm <strong>Abhijith Parimalla</strong>, a passionate Computer Science student specializing in Artificial Intelligence and Machine Learning at Vardhaman College of Engineering. 
-            With a strong foundation in programming languages like <strong>Python, Java, and C++</strong>, I enjoy applying theoretical concepts to real-world challenges through collaborative projects. 
-            My journey is driven by a constant desire to learn and stay ahead of technology trends, always seeking new opportunities to innovate and make an impact. 
-            Explore my work to see how I'm pushing the boundaries of AI and ML!
-        </p>
-        
-        <h2>Want to know more about me? Scroll down!</h2>
-
-        <span class="material-symbols-outlined">arrow_downward</span>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="greeting">Hello, I'm</span>
+                <span class="name">Abhijith Parimalla</span>
+            </h1>
+            <p class="hero-subtitle">AI/ML Engineer & Full Stack Developer</p>
+            <p class="hero-description">
+                Passionate Computer Science student specializing in Artificial Intelligence and Machine Learning. 
+                I transform innovative ideas into intelligent solutions using cutting-edge technology.
+            </p>
+            <div class="hero-buttons">
+                <a href="#projects" class="btn-primary">View My Work</a>
+                <a href="#contact" class="btn-secondary">Get In Touch</a>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span class="material-symbols-outlined">keyboard_arrow_down</span>
+        </div>
     </div>
 
-    <div class="mywork">
-        <section id="about">
-            <div class="about-content">
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
                 <div class="about-text">
-                    <h2>About Me</h2>
-                    
-                </div>
-                <div class="container">
-                    <div class="slide">
-                        <div class="box">
-                            <h2>Bio Data</h2>
-                            <p><b>Name:</b>AbhijithParimalla<br>
-                            <b>DOB:</b>20-05-2005<br>
-                            <b>Nationality:</b> Indian<br>
-                            </p>
+                    <div class="about-card">
+                        <h3>🎓 Education</h3>
+                        <p><strong>B.Tech in CSE (AI & ML)</strong><br>
+                        Vardhaman College of Engineering<br>
+                        CGPA: 9.2 | 2022-2026</p>
+                    </div>
+                    <div class="about-card">
+                        <h3>💻 Technical Skills</h3>
+                        <div class="skills-grid">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">Machine Learning</span>
+                            <span class="skill-tag">Deep Learning</span>
+                            <span class="skill-tag">Web Development</span>
+                            <span class="skill-tag">AI/ML</span>
                         </div>
-                        <div class="box">
-                            <h2>Skills</h2>
-                            <p>C<br>
-                            C++<br>
-                            Java<br>
-                            Python<br>
-                            Problem solving<br>
-                            Web development</p>
-                        </div>
-                        <div class="box">
-                            <h2>Interests and Hobbies</h2>
-                            <p>Watching Movies<br>
-                            Reading Books<br>
-                            Watching Cricket<br>
-                            </p>
-                        </div>
-                        
+                    </div>
+                    <div class="about-card">
+                        <h3>🚀 Interests</h3>
+                        <p>Artificial Intelligence • Machine Learning • Web Development • Innovation • Technology Trends</p>
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="Abhijith.jpg" alt="Your Image">
-                </div>
-            </div>
-        </section>
-        <section id="projects">
-            <h2><b>My Projects</b></h2>
-            <div class="projects-container">
-               
-                <div class="project-names">
-                    <ul>
-                        <li><a href="https://huggingface.co/spaces/abhi2400/Language_Translator" target="_blank" rel="noopener">Language Translator</a></li>
-                        <li><a href="https://huggingface.co/spaces/abhi2400/youtube_video_downloader" target="_blank"rel="noopener">Video downloader</a></li>
-                        <li><b>Apartment management system</b></li>
-                        <li><b>Hospital management system</b></li>
-                        <li><b>Cancer prediction Using Machine learning</b></li>
-                    </ul>
-                </div>
-                
-                
-                <div class="project-images">
-                    <div class="image-box">
-                        <img src="project2.png" alt="Project 1">
+                    <div class="image-container">
+                        <img src="Abhijith.jpg" alt="Abhijith Parimalla" class="profile-img">
+                        <div class="image-overlay"></div>
                     </div>
-                    <div class="image-box">
-                        <img src="project3.png" alt="Project 2">
-                    </div>
-                   
                 </div>
             </div>
-        </section>
-    
-    
-
-    
-    </div>
-  
-
-    <section id="contact">
-        <footer>
-            <div class="contact-icons">
-                <div class="icon-container">
-                    <a href="mailto:abhijeethparimalla@gmail.com" target="_blank" rel="noopener" aria-label="Email">
-                        <img src="gmail.png" alt="Gmail Icon" class="icon">
-                    </a>
-                    <p>Email</p>
-                </div>
-                <div class="icon-container">
-                    <a href="https://www.linkedin.com/in/abhijithparimalla/" target="_blank" rel="noopener" aria-label="LinkedIn">
-                        <img src="linkedin.png" alt="LinkedIn Icon" class="icon">
-                    </a>
-                    <p>LinkedIn</p>
-                </div>
-                <div class="icon-container">
-                    <a href="https://github.com/abhijeeth-pa" target="_blank" rel="noopener" aria-label="GitHub">
-                        <img src="github.png" alt="GitHub Icon" class="icon">
-                    </a>
-                    <p>GitHub</p>
-                </div>
-            </div>
-            <div class="resume-container">
-                <a href="abhijeethresume.pdf" class="resume-button" download>Download My Resume</a>
-            </div>
-        </footer>
+        </div>
     </section>
 
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card featured">
+                    <div class="project-header">
+                        <div class="project-icon">🧠</div>
+                        <span class="project-status">Featured</span>
+                    </div>
+                    <h3>Memory Palace 2.0</h3>
+                    <p>AI-powered memory enhancement tool for users with memory impairments, featuring cognitive games and real-time interaction.</p>
+                    <div class="tech-stack">
+                        <span>Next.js</span>
+                        <span>Supabase</span>
+                        <span>AI/ML</span>
+                        <span>JavaScript</span>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1rg60iASqQXBTIRtQTGYhOGpFLepgxi25/view?usp=drive_link" class="project-link" target="_blank">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🥽</div>
+                        <span class="project-status ongoing">Ongoing</span>
+                    </div>
+                    <h3>Immersive VR AI Learning</h3>
+                    <p>Futuristic VR classroom with AI tutors, built using Blender and Unity with custom learning modes.</p>
+                    <div class="tech-stack">
+                        <span>Blender</span>
+                        <span>Unity</span>
+                        <span>Gemini API</span>
+                        <span>VR</span>
+                    </div>
+                    <a href="#" class="project-link disabled">Coming Soon</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🌐</div>
+                        <span class="project-status">Live</span>
+                    </div>
+                    <h3>Language Translator</h3>
+                    <p>Multipurpose multilingual translator with document and voice support, deployed on HuggingFace.</p>
+                    <div class="tech-stack">
+                        <span>Python</span>
+                        <span>HuggingFace</span>
+                        <span>NLP</span>
+                    </div>
+                    <a href="https://huggingface.co/spaces/abhi2400/Language_Translator" class="project-link" target="_blank">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">👁️</div>
+                        <span class="project-status">Accessibility</span>
+                    </div>
+                    <h3>Inclusive Lingua Bridge</h3>
+                    <p>Braille literacy device with ESP32, featuring real-time translation and speech interaction.</p>
+                    <div class="tech-stack">
+                        <span>Python</span>
+                        <span>ESP32</span>
+                        <span>Firebase</span>
+                        <span>Speech API</span>
+                    </div>
+                    <a href="https://www.linkedin.com/posts/abhijithparimalla_braille-accessibility-inclusivetech-activity-7310003467677286401-aKdS" class="project-link" target="_blank">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">🏥</div>
+                        <span class="project-status">AI/ML</span>
+                    </div>
+                    <h3>AI Health Monitoring</h3>
+                    <p>Real-time health metrics tracking with ML anomaly detection and interactive dashboards.</p>
+                    <div class="tech-stack">
+                        <span>Python</span>
+                        <span>TensorFlow</span>
+                        <span>Streamlit</span>
+                        <span>MongoDB</span>
+                    </div>
+                    <a href="https://www.linkedin.com/posts/abhijithparimalla_machinelearning-ai-fitnesstech-activity-7304557420880482306-TThk" class="project-link" target="_blank">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div class="project-icon">📱</div>
+                        <span class="project-status">Utility</span>
+                    </div>
+                    <h3>Video Downloader</h3>
+                    <p>YouTube video downloader tool with user-friendly interface and multiple format support.</p>
+                    <div class="tech-stack">
+                        <span>Python</span>
+                        <span>Streamlit</span>
+                        <span>API</span>
+                    </div>
+                    <a href="https://huggingface.co/spaces/abhi2400/youtube_video_downloader" class="project-link" target="_blank">View Project</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="section">
+        <div class="container">
+            <h2 class="section-title">Certifications</h2>
+            <div class="certifications-grid">
+                <div class="cert-card">
+                    <div class="cert-icon">📊</div>
+                    <h4>Introduction to Data Science</h4>
+                    <p class="cert-issuer">Infosys • 2024</p>
+                    <a href="https://drive.google.com/file/d/15spy9Ef-tschJu_kvpCb4CVXqLCGOtVv/view?usp=sharing" class="cert-link" target="_blank">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🤖</div>
+                    <h4>Introduction to Natural Language Processing</h4>
+                    <p class="cert-issuer">Infosys • 2024</p>
+                    <a href="https://drive.google.com/file/d/15spy9Ef-tschJu_kvpCb4CVXqLCGOtVv/view?usp=sharing" class="cert-link" target="_blank">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">☁️</div>
+                    <h4>AWS Academy Cloud Foundations</h4>
+                    <p class="cert-issuer">AWS • 2025</p>
+                    <a href="https://drive.google.com/file/d/15spy9Ef-tschJu_kvpCb4CVXqLCGOtVv/view?usp=sharing" class="cert-link" target="_blank">View Certificate</a>
+                </div>
+                <div class="cert-card">
+                    <div class="cert-icon">🧠</div>
+                    <h4>Introduction to Large Language Models</h4>
+                    <p class="cert-issuer">NPTEL • 2025</p>
+                    <a href="https://drive.google.com/file/d/15spy9Ef-tschJu_kvpCb4CVXqLCGOtVv/view?usp=sharing" class="cert-link" target="_blank">View Certificate</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="newsletter" class="section newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h2>Stay Updated</h2>
+                    <p>Subscribe to my newsletter for the latest updates on AI/ML projects, tech insights, and career journey.</p>
+                </div>
+                <form class="newsletter-form" id="newsletterForm">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Enter your email address" required>
+                        <button type="submit" class="subscribe-btn">
+                            <span class="btn-text">Subscribe</span>
+                            <span class="material-symbols-outlined">send</span>
+                        </button>
+                    </div>
+                    <p class="form-note">Join 100+ subscribers who stay ahead in AI/ML</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>I'm always open to discussing new opportunities, collaborations, or just having a chat about technology and innovation.</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <span class="material-symbols-outlined">mail</span>
+                            <span>abhijeethparimalla@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <span class="material-symbols-outlined">school</span>
+                            <span>Vardhaman College of Engineering</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="social-links">
+                    <a href="mailto:abhijeethparimalla@gmail.com" class="social-link" target="_blank">
+                        <img src="gmail.png" alt="Email" class="social-icon">
+                        <span>Email</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/abhijithparimalla/" class="social-link" target="_blank">
+                        <img src="linkedin.png" alt="LinkedIn" class="social-icon">
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/abhijeeth-pa" class="social-link" target="_blank">
+                        <img src="github.png" alt="GitHub" class="social-icon">
+                        <span>GitHub</span>
+                    </a>
+                </div>
+            </div>
+            <div class="resume-section">
+                <a href="abhijeethresume.pdf" class="resume-btn" download>
+                    <span class="material-symbols-outlined">download</span>
+                    Download Resume
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Abhijith Parimalla. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
