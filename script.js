@@ -3,6 +3,11 @@ import Lenis from "@studio-freight/lenis"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 
+// Ensure content is visible from start
+gsap.set("body", { opacity: 1 })
+gsap.set(".section", { opacity: 1 })
+gsap.set(".container", { opacity: 1 })
+
 // Cursor Glow Effect
 document.addEventListener("mousemove", (e) => {
   const cursor = document.querySelector(".cursor-glow")
@@ -65,36 +70,42 @@ document.querySelectorAll("[data-scroll-to]").forEach((link) => {
 })
 
 // GSAP Scroll Animations
-gsap.set(".reveal-text", { y: 100, opacity: 0 })
-gsap.set(".card-reveal", { y: 120, rotationX: -15, opacity: 0 })
 
-// Reveal text animations
+// Reveal text animations - start visible
 ScrollTrigger.batch(".reveal-text", {
   onEnter: (elements) => {
-    gsap.to(elements, {
-      y: 0,
-      opacity: 1,
-      duration: 1.2,
-      stagger: 0.2,
-      ease: "power3.out",
-    })
+    gsap.fromTo(
+      elements,
+      { y: 50, opacity: 0.8 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 1.2,
+        stagger: 0.2,
+        ease: "power3.out",
+      },
+    )
   },
-  start: "top 80%",
+  start: "top 90%",
 })
 
-// Card reveal animations
+// Card reveal animations - start visible
 ScrollTrigger.batch(".card-reveal", {
   onEnter: (elements) => {
-    gsap.to(elements, {
-      y: 0,
-      rotationX: 0,
-      opacity: 1,
-      duration: 1,
-      stagger: 0.15,
-      ease: "power2.out",
-    })
+    gsap.fromTo(
+      elements,
+      { y: 30, rotationX: -5, opacity: 0.9 },
+      {
+        y: 0,
+        rotationX: 0,
+        opacity: 1,
+        duration: 1,
+        stagger: 0.15,
+        ease: "power2.out",
+      },
+    )
   },
-  start: "top 85%",
+  start: "top 90%",
 })
 
 // Parallax effects for hero elements
@@ -185,17 +196,17 @@ ScrollTrigger.create({
   },
 })
 
-// Section entrance animations with 3D effects
+// Section entrance animations - keep content visible
 ScrollTrigger.batch(".section", {
   onEnter: (elements) => {
     elements.forEach((section, index) => {
       gsap.fromTo(
         section,
         {
-          rotationX: -15,
-          y: 100,
-          opacity: 0,
-          scale: 0.9,
+          rotationX: -2,
+          y: 20,
+          opacity: 0.9,
+          scale: 0.98,
         },
         {
           rotationX: 0,
@@ -209,7 +220,7 @@ ScrollTrigger.batch(".section", {
       )
     })
   },
-  start: "top 80%",
+  start: "top 85%",
 })
 
 // Enhanced card animations with magnetic effect
